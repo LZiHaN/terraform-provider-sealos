@@ -1,7 +1,6 @@
 *.dll
 *.exe
 .DS_Store
-dump.rdb
 example.tf
 terraform.tfplan
 terraform.tfstate
@@ -17,22 +16,20 @@ website/node_modules
 ./*.tfstate
 .terraform*
 *.log
-demo.tf
 *.bak
 *~
 .*.swp
 .idea
+.vscode/
 *.iml
 *.test
 *.iml
-*.pem
-vars-pipeline*
-vars-publish*
-develop*
-!vendor/github.com/valyala/**/*.pem
-task-config
+.terraform.lock.hcl
 website/vendor
 
 # Test exclusions
 !command/test-fixtures/**/*.tfstate
 !command/test-fixtures/**/.terraform/
+
+# output binary
+terraform-provider-sealos
