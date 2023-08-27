@@ -1,3 +1,6 @@
+// Copyright (c) eden.zh.li@outlook.com, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package provider
 
 import (
@@ -7,6 +10,8 @@ import (
 // Provider exported function.
 func Provider() *schema.Provider {
 	return &schema.Provider{
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"sealos_cluster": resourceCluster(),
+		},
 	}
 }
