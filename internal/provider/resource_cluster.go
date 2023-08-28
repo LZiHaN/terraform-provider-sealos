@@ -154,6 +154,7 @@ func resourceClusterUpdate(ctx context.Context, d *schema.ResourceData, meta int
 }
 
 func resourceClusterDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	// TODO 当集群创建失败时，销毁操作不会做任何事情
 	config, diags := readClusterConfig(d)
 	if diags.HasError() {
 		return diags
