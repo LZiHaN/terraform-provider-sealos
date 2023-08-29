@@ -12,6 +12,7 @@ import (
 	"github.com/LZiHaN/terraform-provider-sealos/providerhelper/utils/conversions"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"time"
 )
 
 func resourceCluster() *schema.Resource {
@@ -135,13 +136,14 @@ func resourceClusterCreate(ctx context.Context, d *schema.ResourceData, meta int
 			SSH:        config.SSH,
 			Transport:  config.Transport,
 		})
-	fmt.Println("client.Cluster.Run 输出日志: ", string(outputByte))
+	fmt.Println("client.Cluster.Run logs: ", string(outputByte))
 
 	if err != nil {
-		return diag.Errorf("client.Cluster.Run 执行出错:", string(outputByte))
+		return diag.Errorf("client.Cluster.Run errors:", string(outputByte))
 	}
 
-	d.SetId("08270452")
+	// Generate ID
+	d.SetId(time.Now().String())
 	return resourceClusterRead(ctx, d, meta)
 }
 
@@ -154,7 +156,7 @@ func resourceClusterUpdate(ctx context.Context, d *schema.ResourceData, meta int
 }
 
 func resourceClusterDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	// TODO 当集群创建失败时，销毁操作不会做任何事情
+	// TODO when cluster creation fails, the destroy operation does nothing
 	config, diags := readClusterConfig(d)
 	if diags.HasError() {
 		return diags
@@ -172,10 +174,10 @@ func resourceClusterDelete(ctx context.Context, d *schema.ResourceData, meta int
 		Nodes:   config.Nodes,
 		SSH:     config.SSH,
 	})
-	fmt.Println("client.Cluster.Reset 输出日志: ", string(outputByte))
+	fmt.Println("client.Cluster.Reset logs: ", string(outputByte))
 
 	if err != nil {
-		return diag.Errorf("client.Cluster.Reset 执行出错:", string(outputByte))
+		return diag.Errorf("client.Cluster.Reset errors:", string(outputByte))
 	}
 
 	d.SetId("")
@@ -185,7 +187,7 @@ func resourceClusterDelete(ctx context.Context, d *schema.ResourceData, meta int
 func readClusterConfig(d *schema.ResourceData) (cmd.RunCmd, diag.Diagnostics) {
 	var config cmd.RunCmd
 
-	// 从模式数据中读取并填充配置结构体
+	// read and populate configuration structure from schema data
 	config.Cluster = d.Get("cluster_name").(string)
 
 	sshConfRaw, sshConfExists := d.GetOk("ssh.0")
