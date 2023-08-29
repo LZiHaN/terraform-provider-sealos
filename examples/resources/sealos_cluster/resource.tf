@@ -1,6 +1,3 @@
-// Copyright (c) eden.zh.li@outlook.com, Inc.
-// SPDX-License-Identifier: MPL-2.0
-
 resource "sealos_cluster" "example" {
   cluster_name = "test-cluster"
   masters      = ["ip1", "ip2", "ip3"]
