@@ -1,0 +1,1 @@
+terraform import sealos_cluster.example 123
