@@ -1,1 +1,1 @@
-terraform import sealos_cluster.example 123
+terraform import sealos_cluster.example <uuid>
